@@ -267,6 +267,7 @@ TEST_CASE("element access 2")
                     }
                 }
             }
+        }
 
         SECTION("front and back")
         {
