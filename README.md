@@ -1,1 +1,1 @@
-This is a fork of https://github.com/nlohmann/json that provides compatibility with VS2013.
+This is a fork of https://github.com/nlohmann/json that provides compatibility with Visual Studio 2013.
