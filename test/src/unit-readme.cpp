@@ -103,80 +103,6 @@ TEST_CASE("README", "[hide]")
             json array_not_object = { json::array({"currency", "USD"}), json::array({"value", 42.99}) };
         }
 
-        {
-            // create object from string literal
-            json j = "{ \"happy\": true, \"pi\": 3.141 }"_json;
-
-            // or even nicer with a raw string literal
-            auto j2 = R"(
-          {
-            "happy": true,
-            "pi": 3.141
-          }
-        )"_json;
-
-            // or explicitly
-            auto j3 = json::parse("{ \"happy\": true, \"pi\": 3.141 }");
-
-            // explicit conversion to string
-            std::string s = j.dump();    // {\"happy\":true,\"pi\":3.141}
-
-            // serialization with pretty printing
-            // pass in the amount of spaces to indent
-            std::cout << j.dump(4) << std::endl;
-            // {
-            //     "happy": true,
-            //     "pi": 3.141
-            // }
-
-            std::cout << std::setw(2) << j << std::endl;
-        }
-
-        {
-            // create an array using push_back
-            json j;
-            j.push_back("foo");
-            j.push_back(1);
-            j.push_back(true);
-
-            // iterate the array
-            for (json::iterator it = j.begin(); it != j.end(); ++it)
-            {
-                std::cout << *it << '\n';
-            }
-
-            // range-based for
-            for (auto element : j)
-            {
-                std::cout << element << '\n';
-            }
-
-            // getter/setter
-            const std::string tmp = j[0];
-            j[1] = 42;
-            bool foo = j.at(2);
-
-            // other stuff
-            j.size();     // 3 entries
-            j.empty();    // false
-            j.type();     // json::value_t::array
-            j.clear();    // the array is empty again
-
-            // comparison
-            j == "[\"foo\", 1, true]"_json;  // true
-
-            // create an object
-            json o;
-            o["foo"] = 23;
-            o["bar"] = false;
-            o["baz"] = 3.141;
-
-            // find an entry
-            if (o.find("foo") != o.end())
-            {
-                // there is an entry with key "foo"
-            }
-        }
 
         {
             std::vector<int> c_vector {1, 2, 3, 4};
@@ -259,39 +185,7 @@ TEST_CASE("README", "[hide]")
             // etc.
         }
 
-        {
-            // a JSON value
-            json j_original = R"({
-          "baz": ["one", "two", "three"],
-          "foo": "bar"
-        })"_json;
-
-            // access members with a JSON pointer (RFC 6901)
-            j_original["/baz/1"_json_pointer];
-            // "two"
-
-            // a JSON patch (RFC 6902)
-            json j_patch = R"([
-          { "op": "replace", "path": "/baz", "value": "boo" },
-          { "op": "add", "path": "/hello", "value": ["world"] },
-          { "op": "remove", "path": "/foo"}
-        ])"_json;
-
-            // apply the patch
-            json j_result = j_original.patch(j_patch);
-            // {
-            //    "baz": "boo",
-            //    "hello": ["world"]
-            // }
-
-            // calculate a JSON patch from two JSON values
-            json::diff(j_result, j_original);
-            // [
-            //   { "op":" replace", "path": "/baz", "value": ["one", "two", "three"] },
-            //   { "op":"remove","path":"/hello" },
-            //   { "op":"add","path":"/foo","value":"bar" }
-            // ]
-        }
+      
 
         // restore old std::cout
         std::cout.rdbuf(old_cout_buffer);
