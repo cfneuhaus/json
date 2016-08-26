@@ -136,14 +136,6 @@ TEST_CASE("parser class")
 
             SECTION("escaped")
             {
-                // quotation mark "\""
-                auto r1 = R"("\"")"_json;
-                CHECK(json::parser("\"\\\"\"").parse() == r1);
-                // reverse solidus "\\"
-                auto r2 = R"("\\")"_json;
-                CHECK(json::parser("\"\\\\\"").parse() == r2);
-                // solidus
-                CHECK(json::parser("\"\\/\"").parse() == R"("/")"_json);
                 // backspace
                 CHECK(json::parser("\"\\b\"").parse() == json("\b"));
                 // formfeed
